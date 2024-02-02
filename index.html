@@ -47,7 +47,21 @@
             const selectedIndex = trackSelect.value;
             audioPlayer.src = playlist[selectedIndex];
             audioPlayer.play();
+            
+            // Save the selected track index to local storage
+            localStorage.setItem('selectedTrack', selectedIndex);
         }
+
+        // Check if there is a stored track index, otherwise default to chapter one
+        const storedTrackIndex = localStorage.getItem('selectedTrack');
+        if (storedTrackIndex !== null) {
+            trackSelect.value = storedTrackIndex;
+        } else {
+            trackSelect.value = 0; // Default to chapter one
+        }
+
+        // Initial playback based on stored or default track
+        selectTrack();
 
         // Event listener for track end to play the next track
         audioPlayer.addEventListener('ended', () => {
